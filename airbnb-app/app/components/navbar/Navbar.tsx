@@ -1,6 +1,8 @@
+'use client';
+
 import Container from '../Container';
-import Logo from './Logo';
-import Search from './Search';
+import Logo from '@/app/components/navbar/Logo';
+import Search from '@/app/components/navbar/Search';
 import UserMenu from './UserMenu';
 
 const Navbar = () => {
