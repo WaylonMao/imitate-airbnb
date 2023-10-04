@@ -35,6 +35,7 @@ const RegisterModal = () => {
       .post('/api/register', data)
       .then((res) => {
         setIsLoading(false);
+        console.log(res.data);
         registerModal.onClose();
       })
       .catch((err) => {
