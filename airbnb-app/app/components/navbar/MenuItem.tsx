@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 interface MenuItemProps {
   onClick: () => void;
   lable: string;
