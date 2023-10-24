@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
@@ -12,6 +12,7 @@ import Modal from '@/app/components/modals/Modal';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/inputs/Input';
 import Button from '@/app/components/Button';
+import { signIn } from 'next-auth/react';
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -38,7 +39,7 @@ const RegisterModal = () => {
         console.log(res.data);
         registerModal.onClose();
       })
-      .catch((err) => {
+      .catch(() => {
         setIsLoading(false);
         toast.error('Something went wrong, please try again.');
       })
@@ -91,7 +92,7 @@ const RegisterModal = () => {
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => {signIn('github')}}
       />
       <div
         className="
