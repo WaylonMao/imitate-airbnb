@@ -1,12 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import Modal from '@/app/components/modals/Modal';
 import useRentModal from '@/app/hooks/useRentModal';
 import Heading from '@/app/components/Heading';
 import { categories } from '@/app/components/navbar/Categories';
 import CategoryInput from '@/app/components/inputs/CategoryInput';
-import { FieldValues, useForm } from 'react-hook-form';
+import CountrySelect from '@/app/components/inputs/CountrySelect';
+import dynamic from 'next/dynamic';
 
 enum STEPS {
   CATEGORY = 0,
@@ -42,14 +44,21 @@ const RentModal = () => {
   });
 
   const category = watch('category');
+  const location = watch('location');
+
+
+  const Map = useMemo(
+    () => dynamic(() => import('@/app/components/Map'), { ssr: false }),
+    [location],
+  );
 
   const setCustomValue = (id: string, value: any) => {
-    setValue(id, value,{
+    setValue(id, value, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,
     });
-  }
+  };
 
   const onBack = () => {
     setStep((prev) => prev - 1);
@@ -92,7 +101,9 @@ const RentModal = () => {
         {categories.map((items) => (
           <div key={items.label} className="col-span-1">
             <CategoryInput
-              onClick={(category) => {setCustomValue('category',category)}}
+              onClick={(category) => {
+                setCustomValue('category', category);
+              }}
               selected={items.label === category}
               label={items.label}
               icon={items.icon}
@@ -103,11 +114,29 @@ const RentModal = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Where's your place located?"
+          subtitle="Guests will only get your exact address once they've booked a reservation."
+        />
+        <CountrySelect
+          value={location}
+          onChange={(value) => {
+            setCustomValue('location', value);
+          }}
+        />
+        <Map center={location?.latlng} />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryAction={step !== STEPS.CATEGORY ? onBack : undefined}
       secondaryActionLabel={secondaryLabel}
