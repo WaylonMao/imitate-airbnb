@@ -4,10 +4,10 @@ import React from 'react';
 
 interface MenuItemProps {
   onClick: () => void;
-  lable: string;
+  label: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ onClick, lable }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ onClick, label }) => {
   return (
     <div
       onClick={onClick}
@@ -19,7 +19,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ onClick, lable }) => {
         font-semibold
       "
     >
-      {lable}
+      {label}
     </div>);
 };
 
