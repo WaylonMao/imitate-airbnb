@@ -1,7 +1,6 @@
 'use client';
 
-import { Reservation } from '@prisma/client';
-import { SafeListing, SafeUser } from '@/app/types';
+import { SafeListing, SafeReservation, SafeUser } from '@/app/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { categories } from '@/app/components/navbar/Categories';
@@ -22,7 +21,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
@@ -74,8 +73,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
         // Redirect to /trip
         router.refresh();
       })
-      .catch(() => {
-        toast.error('Something went wrong.');
+      .catch((error) => {
+        const errorMessage =
+          error.response?.data?.error || 'Something went wrong.';
+        toast.error(errorMessage);
       })
       .finally(() => {
         setIsLoading(false);
@@ -86,7 +87,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInCalendarDays(
         dateRange.endDate,
-        dateRange.startDate
+        dateRange.startDate,
       );
 
       if (dayCount && listing.price) {
