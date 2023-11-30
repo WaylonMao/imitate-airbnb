@@ -1,7 +1,7 @@
 'use client';
 
 import { SafeListing, SafeReservation, SafeUser } from '@/app/types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { categories } from '@/app/components/navbar/Categories';
 import { Range } from 'react-date-range';
@@ -70,7 +70,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
       .then(() => {
         toast.success('Listing reserved!');
         setDateRange(initialDateRange);
-        // Redirect to /trip
+        router.push('/trips')
         router.refresh();
       })
       .catch((error) => {
