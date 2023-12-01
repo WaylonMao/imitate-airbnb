@@ -1,9 +1,10 @@
-import getCurrentUser from '@/app/actions/getCurrentUser';
+export const dynamic = 'force-dynamic';
 
 import ClientOnly from '@/app/components/ClientOnly';
 import Container from '@/app/components/Container';
 import EmptyState from '@/app/components/EmptyState';
 import ListingCard from '@/app/components/listings/ListingCard';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 import getListings, { IListingsParams } from '@/app/actions/getListings';
 
 interface HomeProps {
@@ -14,12 +15,13 @@ const Home = async ({ searchParams }: HomeProps) => {
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
 
-  if (listings.length === 0)
+  if (listings.length === 0) {
     return (
       <ClientOnly>
         <EmptyState showReset />
       </ClientOnly>
     );
+  }
 
   return (
     <ClientOnly>
@@ -37,15 +39,13 @@ const Home = async ({ searchParams }: HomeProps) => {
           gap-8
         "
         >
-          {listings.map((listing: any) => {
-            return (
-              <ListingCard
-                currentUser={currentUser}
-                key={listing.id}
-                data={listing}
-              />
-            );
-          })}
+          {listings.map((listing: any) => (
+            <ListingCard
+              currentUser={currentUser}
+              key={listing.id}
+              data={listing}
+            />
+          ))}
         </div>
       </Container>
     </ClientOnly>
