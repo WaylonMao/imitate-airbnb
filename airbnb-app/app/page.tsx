@@ -4,10 +4,10 @@ import ClientOnly from '@/app/components/ClientOnly';
 import Container from '@/app/components/Container';
 import EmptyState from '@/app/components/EmptyState';
 import ListingCard from '@/app/components/listings/ListingCard';
-import getListings, { IListingParams } from '@/app/actions/getListings';
+import getListings, { IListingsParams } from '@/app/actions/getListings';
 
 interface HomeProps {
-  searchParams: IListingParams;
+  searchParams: IListingsParams;
 }
 
 const Home = async ({ searchParams }: HomeProps) => {
