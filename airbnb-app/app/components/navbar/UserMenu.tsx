@@ -51,7 +51,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             cursor-pointer
           "
         >
-          Airbnb your home
+          Post your home
         </div>
         <div
           onClick={toggleOpen}
@@ -124,7 +124,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   }}
                 />
                 <MenuItem
-                  label="Airbnb your home"
+                  label="Post your home"
                   onClick={() => {
                     setIsOpen(false);
                     rentModal.onOpen();

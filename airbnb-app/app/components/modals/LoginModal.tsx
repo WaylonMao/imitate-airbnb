@@ -116,7 +116,7 @@ const LoginModal = () => {
           gap-2
           "
         >
-          <div>First time using Airbnb?</div>
+          <div>First time using?</div>
           <div
             className="
               text-neutral-800
